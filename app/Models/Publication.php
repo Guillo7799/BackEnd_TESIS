@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Publication extends Model
 {
+    use HasFactory;
     protected $fillable = ['career', 'description','hours','date'];
 }

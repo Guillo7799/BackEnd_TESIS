@@ -17,7 +17,7 @@ class CreatePublicationsTable extends Migration
             $table->id();
             $table->string('career', 200);
             $table->text('description');
-            $table->float('hours',3,2);
+            $table->string('hours',100);
             $table->dateTime('date');
             $table->timestamps();
         });
