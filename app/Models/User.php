@@ -21,8 +21,12 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'type',
+        'description',
+        'career',
+        'cellphone',
         'province',
-        'location',
+        'city',
     ];
 
     /**
@@ -51,5 +55,13 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function publications()
+    {
+        return $this->belongsToMany('App\Publication')->withTimestamps();
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }

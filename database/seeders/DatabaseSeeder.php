@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Publication;
-use App\Models\Comment;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,8 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
-        Publication::factory(50)->create();
-        Comment::factory(3);
+        Schema::disableForeignKeyConstraints();
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(PublicationsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(CommentsTableSeeder::class);
+        Schema::enableForeignKeyConstraints();
     }
 }
