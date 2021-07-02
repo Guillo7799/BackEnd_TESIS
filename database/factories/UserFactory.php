@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => Hash::make(
                 '123123'
-            ), // password
+            ), // password con hash en la base
             'remember_token' => Str::random(10),
             'province' => $this->faker->sentence,
             'location' => $this->faker->sentence,
