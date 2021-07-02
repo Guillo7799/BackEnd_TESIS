@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
-/**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('province');
             $table->string('location');
             $table->timestamps();
-            
         });
     }
 
