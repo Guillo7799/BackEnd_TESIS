@@ -23,12 +23,21 @@ use Illuminate\Support\Str;
 Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::get('publications', 'App\Http\Controllers\PublicationController@index');
+Route::get('comments', 'App\Http\Controllers\CommentController@index');
 
 // Rutas privadas
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
+
+    // Rutas para publicaciones de oferta
     Route::get('publications/{publication}', 'App\Http\Controllers\PublicationController@show');
     Route::post('publications', 'App\Http\Controllers\PublicationController@store');
     Route::put('publications/{publication}', 'App\Http\Controllers\PublicationController@update');
     Route::delete('publications/{publication}', 'App\Http\Controllers\PublicationController@delete');
+
+    //Rutas para comentarios
+    Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');
+    Route::post('comments', 'App\Http\Controllers\CommentController@store');
+    Route::put('comments/{comment}', 'App\Http\Controllers\CommentController@update');
+    Route::delete('comments/{comment}', 'App\Http\Controllers\CommentController@delete');
 });
