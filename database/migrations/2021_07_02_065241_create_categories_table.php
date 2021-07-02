@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommentsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->text('content');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->enum('designation', ['Ingeniería', 'Ciencias', 'Tecnología Superior', 'Enfermería', 'Medicina', 'Leyes', 'Idiomas']);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('categories');
     }
 }

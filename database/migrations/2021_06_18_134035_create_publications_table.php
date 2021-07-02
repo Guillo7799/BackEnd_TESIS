@@ -21,6 +21,13 @@ class CreatePublicationsTable extends Migration
             $table->dateTime('date');
             $table->timestamps();
         });
+        Schema::create('publication_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->unsignedBigInteger('publication_id');
+            $table->foreign('publication_id')->references('id')->on('publications')->onDelete('restrict');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -30,6 +37,9 @@ class CreatePublicationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publications');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('publication_user');
+        Schema::dropIfExists('publication');
+        Schema::enableForeignKeyConstraints();
     }
 }
