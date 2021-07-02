@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publication;
+use App\Http\Resources\Publication as PublicationResource;
+use App\Http\Resources\PublicationCollection;
 use Illuminate\Http\Request;
 
 class PublicationController extends Controller
 {
     public function index()
     {
-        return Publication::all();
+        return new PublicationCollection(Publication::paginate(10));
     }
     public function show(Publication $publication)
     {
-        return $publication;
+        return response()->json(new PublicationResource($publication), 200);
     }
     public function store(Request $request)
     {
