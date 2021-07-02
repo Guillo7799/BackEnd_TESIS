@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
 
 Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
-Route::get('articles', 'App\Http\Controllers\PublicationController@index');
+Route::get('publications', 'App\Http\Controllers\PublicationController@index');
 
 // Rutas privadas
 Route::group(['middleware' => ['jwt.verify']], function () {
