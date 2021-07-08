@@ -24,10 +24,18 @@ Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::get('publications', 'App\Http\Controllers\PublicationController@index');
 Route::get('comments', 'App\Http\Controllers\CommentController@index');
+Route::get('categories', 'App\Http\Controllers\CategoryController@index');
 
 // Rutas privadas
 Route::group(['middleware' => ['jwt.verify']], function () {
+
+    //Rutas para usuarios
     Route::get('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
+    //Route::get('users', 'App\Http\Controllers\UserController@index');
+    //Route::get('users/{user}', 'App\Http\Controllers\UserController@show');
+    //Route::put('users/{user}', 'App\Http\Controllers\UserController@update');
+    //Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
+    Route::post('logout', 'UserController@logout');
 
     // Rutas para publicaciones de oferta
     Route::get('publications/{publication}', 'App\Http\Controllers\PublicationController@show');
@@ -40,4 +48,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('comments', 'App\Http\Controllers\CommentController@store');
     Route::put('comments/{comment}', 'App\Http\Controllers\CommentController@update');
     Route::delete('comments/{comment}', 'App\Http\Controllers\CommentController@delete');
+
+    //Rutas para las categorías
+    Route::get('categories/{category}', 'App\Http\Controllers\CategoryController@show');
+    Route::post('categories', 'App\Http\Controllers\CategoryController@store');
+    Route::put('categories/{category}', 'App\Http\Controllers\CategoryController@update');
+    Route::delete('categories/{category}', 'App\Http\Controllers\CategoryController@delete');
 });

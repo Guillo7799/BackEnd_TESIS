@@ -30,7 +30,12 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'province' => 'required|string|max:300',
+            'city' => 'required|string|max:300',
             'location' => 'required|string|max:500',
+            'type' => 'required|string|max:200',
+            'description' => 'required|string|max:1000',
+            'career' => 'required|string|max:300',
+            'cellphone' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
@@ -40,7 +45,12 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'province' => $request->get('province'),
+            'city' => $request->get('city'),
             'location' => $request->get('location'),
+            'type' => $request->get('type'),
+            'description' => $request->get('description'),
+            'career' => $request->get('career'),
+            'cellphone' => $request->get('cellphone'),
         ]);
         $token = JWTAuth::fromUser($user);
         return response()->json(compact('user', 'token'), 201);
