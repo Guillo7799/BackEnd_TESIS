@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         $this->call(CategoriesTableSeeder::class);
-        $this->call(PublicationsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(PublicationsTableSeeder::class);
         $this->call(CommentsTableSeeder::class);
         Schema::enableForeignKeyConstraints();
     }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Publication extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['career', 'description', 'hours', 'date','category_id'];
     public static function boot()
     {
         parent::boot();
@@ -17,8 +17,6 @@ class Publication extends Model
             $publication->user_id = Auth::id();
         });
     }
-
-    protected $fillable = ['career', 'description', 'hours', 'date'];
 
     public function category()
     {

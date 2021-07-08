@@ -29,12 +29,13 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->firstName,
                 'email' => $faker->email,
                 'password' => $password,
+                'province'=>$faker->sentence,
+                'city'=>$faker->sentence,
+                'location'=>$faker->sentence,
                 'type' => $faker->randomElement(['Estudiante', 'Empresa']),
                 'description' => $faker->paragraph,
                 'career' => $faker->sentence,
-                'cellphone' => '0987654321',
-                'province' => $faker->sentence,
-                'city' => $faker->sentence
+                'cellphone' => '0987654321'
             ]);
         }
     }

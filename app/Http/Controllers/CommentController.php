@@ -6,9 +6,18 @@ use App\Models\Comment;
 use App\Http\Resources\Comment as CommentResource;
 use App\Http\Resources\CommentCollection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
+    private static $rules=[
+        'content' => 'required|string|unique:comments|max:2000',
+    ];
+
+    private static $messages=[
+        'content.required' => 'Falta el contenido del mensaje',
+    ];
+
     public function index()
     {
         return new CommentCollection(Comment::paginate(5));
@@ -19,6 +28,7 @@ class CommentController extends Controller
     }
     public function store(Request $request)
     {
+        $request -> validate(self::$rules, self::$messages);
         $comment = Comment::create($request->all());
         return response()->json($comment, 201);
     }
