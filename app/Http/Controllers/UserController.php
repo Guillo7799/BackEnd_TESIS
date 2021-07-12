@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Publication;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
@@ -69,5 +71,15 @@ class UserController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
         }
         return response()->json(compact('user'));
+    }
+    public function index(Publication $publication, User $user)
+    {
+        $user=$publication->users;
+        return response()->json(UserResource::Collection($publication),200);
+    }
+    public function show(Publication $publication, User $user)
+    {
+        $user=$publication->users()->where('id', $user->id)->firstOrFail();
+        return response()->json($user, 200); 
     }
 }
