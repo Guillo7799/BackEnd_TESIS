@@ -54,4 +54,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('categories', 'App\Http\Controllers\CategoryController@store');
     Route::put('categories/{category}', 'App\Http\Controllers\CategoryController@update');
     Route::delete('categories/{category}', 'App\Http\Controllers\CategoryController@delete');
+
+    //Rutas de postulantes por publicación
+    Route::get('publications/{publication}/users', 'App\Http\Controllers\UserController@index');
+    Route::get('publications/{publication}/users/{user}', 'App\Http\Controllers\UserController@show');
 });
