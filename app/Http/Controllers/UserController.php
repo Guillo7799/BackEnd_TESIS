@@ -38,10 +38,12 @@ class UserController extends Controller
             'description' => 'required|string|max:1000',
             'career' => 'required|string|max:300',
             'cellphone' => 'required',
+            'image' => 'required|image',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
-        }
+        }        
+        $path = $request->image->store('public/images');
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -53,6 +55,7 @@ class UserController extends Controller
             'description' => $request->get('description'),
             'career' => $request->get('career'),
             'cellphone' => $request->get('cellphone'),
+            'image' => $path,
         ]);
         $token = JWTAuth::fromUser($user);
         return response()->json(compact('user', 'token'), 201);
