@@ -22,8 +22,9 @@ class UsersTableSeeder extends Seeder
         // Crear la misma clave para todos los usuarios
         // conviene hacerlo antes del for para que el seeder
         // no se vuelva lento.
-        $password = Hash::make('123123');
+        $password = Hash::make('123123');        
         // Generar algunos usuarios conductores para nuestra aplicacion
+        $role=['ROLE_STUDENT','ROLE_BUSINESS'];
         for ($i = 0; $i < 5; $i++) {
             User::create([
                 'name' => $faker->firstName,
@@ -32,10 +33,11 @@ class UsersTableSeeder extends Seeder
                 'province'=>$faker->sentence,
                 'city'=>$faker->sentence,
                 'location'=>$faker->sentence,
-                'type' => $faker->randomElement(['Estudiante', 'Empresa']),
+                'type' => $faker->randomElement($role),
                 'description' => $faker->paragraph,
                 'career' => $faker->sentence,
-                'cellphone' => '0987654321'
+                'cellphone' => '0987654321',
+                'image' => $faker->imageUrl(400,300, null, false)
             ]);
         }
     }
