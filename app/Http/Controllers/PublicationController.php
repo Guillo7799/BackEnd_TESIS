@@ -27,20 +27,30 @@ class PublicationController extends Controller
     ];
     public function index()
     {
+        //$this->authorize('viewAny', Publication::class);
         return new PublicationCollection(Publication::paginate(10));
     }
     public function show(Publication $publication)
     {
+        $this->authorize('view', $publication);
         return response()->json(new PublicationResource($publication), 200);
     }
     public function store(Request $request)
     {
+        $this->authorize('create', Publication::class);
+
         $request->validate(self::$rules, self::$messages);
         $publication = Publication::create($request->all());
         return response()->json($publication, 201);
     }
     public function update(Request $request, Publication $publication)
     {
+        $this->authorize('update',$publication);
+
+        $request->validate([
+            'description' => 'required|string|unique:publications,description,'.$publication->id.'|max:300',
+            'hours' => 'required',
+        ], self::$messages);
         $publication->update($request->all());
         return response()->json($publication, 200);
     }
