@@ -38,7 +38,7 @@ class UserController extends Controller
             'description' => 'required|string|max:1000',
             'career' => 'required|string|max:300',
             'cellphone' => 'required',
-            'image' => 'required|image',
+            'image' => 'required|image', //erificar como hacerla opcional            
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
