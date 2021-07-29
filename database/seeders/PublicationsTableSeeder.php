@@ -29,8 +29,8 @@ class PublicationsTableSeeder extends Seeder
             // iniciamos sesión con este usuario
             JWTAuth::attempt(['email' => $user->email, 'password' => '123123']);
             // Y ahora con este usuario creamos algunos articulos
-            $num_articles = 5;
-            for ($j = 0; $j < $num_articles; $j++) {
+            $num_publications = 5;
+            for ($j = 0; $j < $num_publications; $j++) {
                 Publication::create([
                     'career' => $faker->sentence,
                     'description' => $faker->paragraph,

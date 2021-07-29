@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Publication;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PublicationPolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
 
@@ -25,19 +25,19 @@ class PublicationPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isGranted(User::ROLE_STUDENT);
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Publication  $publication
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function view(User $user, Publication $publication)
+    public function view(User $user, Comment $comment)
     {
-        return $user->isGranted(User::ROLE_STUDENT);
+        //
     }
 
     /**
@@ -48,41 +48,41 @@ class PublicationPolicy
      */
     public function create(User $user)
     {
-        return $user->isGranted(User::ROLE_BUSINESS);
+        return $user->isGranted(User::ROLE_STUDENT);
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Publication  $publication
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function update(User $user, Publication $publication)
+    public function update(User $user, Comment $comment)
     {
-        return $user->isGranted(User::ROLE_STUDENT) && $user->id === $publication->user_id;
+        return $user->isGranted(User::ROLE_STUDENT) && $user->id === $comment->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Publication  $publication
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function delete(User $user, Publication $publication)
+    public function delete(User $user, Comment $comment)
     {
-        return $user->isGranted(User::ROLE_BUSINESS);
+        return $user->isGranted(User::ROLE_STUDENT);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Publication  $publication
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function restore(User $user, Publication $publication)
+    public function restore(User $user, Comment $comment)
     {
         //
     }
@@ -91,10 +91,10 @@ class PublicationPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Publication  $publication
+     * @param  \App\Models\Comment  $comment
      * @return mixed
      */
-    public function forceDelete(User $user, Publication $publication)
+    public function forceDelete(User $user, Comment $comment)
     {
         //
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImageColumnUser extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddImageColumnUser extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-        $table->string('image')->nullable();
-});
+        Schema::create('admins', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('credential_number');
+        });
     }
 
     /**
@@ -25,8 +26,6 @@ class AddImageColumnUser extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-        $table->dropColumn('image');
-        });
+        Schema::dropIfExists('admins');
     }
 }
