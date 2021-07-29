@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Publication;
+use App\Models\Business;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -25,27 +26,39 @@ class UserController extends Controller
         }
         return response()->json(compact('token'));
     }
-    public function register(Request $request)
+    public function businessregister(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'province' => 'required|string|max:300',
             'city' => 'required|string|max:300',
-            'location' => 'required|string|max:500',
-            'type' => 'required|string|max:200',
+            'location'=>'required|string',
             'description' => 'required|string|max:1000',
-            'career' => 'required|string|max:300',
             'cellphone' => 'required',
-            'image' => 'required|image', //erificar como hacerla opcional            
-        ]);
+            'image' => 'required|image', //verificar como hacerla opcional
+            'role'=>'required',
+            //Validaciones para Empresa
+            'ruc'=>'string|min:13|max:13',
+            'business_name'=>'nullable|string|max:300',
+            'business_type'=>'nullable|string',
+            'business_age'=>'nullable|string'
+        ]);        
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
-        }        
+        }                
+        $business=Business::create([
+            'ruc'=>$request->get('ruc'),
+            'business_name'=>$request->get('business_name'),
+            'business_type'=>$request->get('business_type'),
+            'business_age'=>$request->get('business_age'),
+        ]);               
         $path = $request->image->store('public/images');
-        $user = User::create([
+        $business -> user()->create([
             'name' => $request->get('name'),
+            'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'province' => $request->get('province'),
@@ -56,6 +69,43 @@ class UserController extends Controller
             'career' => $request->get('career'),
             'cellphone' => $request->get('cellphone'),
             'image' => $path,
+            'role'=>$request->get('role'),
+        ]);
+        $user=$business->user;
+        $token = JWTAuth::fromUser($business->user);
+        return response()->json(compact('user', 'token'), 201);        
+    }
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'province' => 'required|string|max:300',
+            'city' => 'required|string|max:300',
+            'location' => 'required|string|max:500',            
+            'description' => 'required|string|max:1000',            
+            'cellphone' => 'required',
+            'image' => 'nullable|image', //verificar como hacerla opcional
+            'role'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }        
+        $path = $request->image->store('public/images');
+        $user = User::create([
+            'name' => $request->get('name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'province' => $request->get('province'),
+            'city' => $request->get('city'),
+            'location' => $request->get('location'),
+            'description' => $request->get('description'),
+            'cellphone' => $request->get('cellphone'),
+            'image' => $path,
+            'role'=>$request->get('role'),
         ]);
         $token = JWTAuth::fromUser($user);
         return response()->json(compact('user', 'token'), 201);
@@ -73,7 +123,7 @@ class UserController extends Controller
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-        return response()->json(compact('user'));
+        return response()->json(new UserResource($user),200);
     }
     public function index(Publication $publication, User $user)
     {

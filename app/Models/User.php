@@ -19,17 +19,18 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
         'password',
         'province',
         'city',
         'location',
-        'type',
         'description',
-        'career',
         'cellphone',
         'image',
+        'role',
     ];
+
 
     const ROLE_SUPERADMIN = 'ROLE_SUPERADMIN';
     const ROLE_BUSINESS = 'ROLE_BUSINESS';
@@ -76,12 +77,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Comment');
     }
-    //public function isGranted($role)
-    //{
-     //   return $role === $this->role || in_array($role,
-      //  self::ROLES_HIERARCHY[$this->role]);
-    //}
-
+    public function cviates()
+    {
+        return $this->hasOne('App\CVitae');
+    }
     public function isGranted($role)
     {
         if ($role === $this->role) {
@@ -102,5 +101,9 @@ class User extends Authenticatable implements JWTSubject
             }
         }
         return false;
+    }
+    public function userable()
+    {
+    return $this->morphTo();
     }
 }

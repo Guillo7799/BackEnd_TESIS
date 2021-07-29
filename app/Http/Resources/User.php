@@ -6,6 +6,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class User extends JsonResource
 {
+    protected $token;
+
+    public function __construct($resource, $token=null){
+        parent::__construct($resource);
+        $this->$token = $token;
+    }
     /**
      * Transform the resource into an array.
      *
@@ -19,8 +25,10 @@ class User extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'image'=> $this->image,
+            $this->merge($this->userable),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'token'=>$this->when($this->$token, $this->$token)
         ];
     }
 }

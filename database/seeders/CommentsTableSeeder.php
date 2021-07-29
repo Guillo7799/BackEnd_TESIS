@@ -26,7 +26,7 @@ class CommentsTableSeeder extends Seeder
             // iniciamos sesión con cada uno
             JWTAuth::attempt(['email' => $user->email, 'password' => '123123']);
             // Creamos un comentario para cada artículo con este usuario
-            foreach ($user as $users) {
+            for ($i = 0; $i < 4 ; $i++) {
                 Comment::create([
                     'content' => $faker->paragraph,
                 ]);

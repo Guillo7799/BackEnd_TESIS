@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Publication extends Model
 {
     use HasFactory;
-    protected $fillable = ['career', 'description', 'hours', 'date','category_id'];
+    protected $fillable = [
+        'career',
+        'description', 
+        'hours', 
+        'date',
+        'category_id'
+    ];
     public static function boot()
     {
         parent::boot();

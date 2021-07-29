@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 //Rutas públicas
 
 Route::post('register', 'App\Http\Controllers\UserController@register');
+Route::post('businessregister', 'App\Http\Controllers\UserController@businessregister');
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::get('publications', 'App\Http\Controllers\PublicationController@index');
 Route::get('comments', 'App\Http\Controllers\CommentController@index');
@@ -36,6 +37,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Route::put('users/{user}', 'App\Http\Controllers\UserController@update');
     //Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
     Route::post('logout', 'UserController@logout');
+
+    // Rutas para Hojas de vida
+    Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
+    Route::get('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@show');
+    Route::post('cvitaes', 'App\Http\Controllers\CVitaeController@store');
+    Route::put('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@update');
+    Route::delete('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@delete');
 
     // Rutas para publicaciones de oferta
     Route::get('publications/{publication}', 'App\Http\Controllers\PublicationController@show');
