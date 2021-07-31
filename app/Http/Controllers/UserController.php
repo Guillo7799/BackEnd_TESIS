@@ -24,7 +24,19 @@ class UserController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        return response()->json(compact('token'));
+        $user = JWTAuth::user();
+        return response()->json(compact('token','user'))
+            ->withCookie(
+              'token',
+              $token,
+              config('jwt.ttl'), // ttl => time to live
+              '/', // path
+              null, // domain
+              config('app.env') !== 'local', // secure
+              true, // httpOnly
+              false,
+              config('app.env') !== 'local' ? 'None' : 'Lax' // SameSite
+            );
     }
     public function businessregister(Request $request)
     {
@@ -71,9 +83,19 @@ class UserController extends Controller
             'image' => $path,
             'role'=>$request->get('role'),
         ]);
-        $user=$business->user;
-        $token = JWTAuth::fromUser($business->user);
-        return response()->json(compact('user', 'token'), 201);        
+        $token = JWTAuth::fromUser($user);
+        return response()->json(compact('user', 'token'), 201)
+            ->withCookie(
+                'token',
+                $token,
+                config('jwt.ttl'), // ttl => time to live
+                '/', // path
+                null, // domain
+                config('app.env') !== 'local', // secure
+                true, // httpOnly
+                false,
+                config('app.env') !== 'local' ? 'None' : 'Lax' // SameSite
+            );      
     }
     public function register(Request $request)
     {
@@ -108,7 +130,18 @@ class UserController extends Controller
             'role'=>$request->get('role'),
         ]);
         $token = JWTAuth::fromUser($user);
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('user', 'token'), 201)
+            ->withCookie(
+                'token',
+                $token,
+                config('jwt.ttl'), // ttl => time to live
+                '/', // path
+                null, // domain
+                config('app.env') !== 'local', // secure
+                true, // httpOnly
+                false,
+                config('app.env') !== 'local' ? 'None' : 'Lax' // SameSite
+            );
     }
     public function getAuthenticatedUser()
     {
