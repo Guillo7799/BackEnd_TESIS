@@ -82,8 +82,9 @@ class UserController extends Controller
             'cellphone' => $request->get('cellphone'),
             'image' => $path,
             'role'=>$request->get('role'),
-        ]);
-        $token = JWTAuth::fromUser($user);
+        ]); 
+        $user=$business->user;
+        $token = JWTAuth::fromUser($business->user);
         return response()->json(compact('user', 'token'), 201)
             ->withCookie(
                 'token',
