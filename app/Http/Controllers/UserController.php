@@ -159,14 +159,82 @@ class UserController extends Controller
         }
         return response()->json(new UserResource($user),200);
     }
-    public function index(Publication $publication, User $user)
+    public function logout()
     {
-        $user=$publication->users;
-        return response()->json(UserResource::Collection($publication),200);
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+//            Cookie::queue(Cookie::forget('token'));
+//            $cookie = Cookie::forget('token');
+//            $cookie->withSameSite('None');
+            return response()->json([
+                "status" => "Realizado con éxito",
+                "message" => "Cierre de sesión exitoso"
+            ], 200)
+                ->withCookie('token', null,
+                    config('jwt.ttl'),
+                    '/',
+                    null,
+                    config('app.env') !== 'local',
+                    true,
+                    false,
+                    config('app.env') !== 'local' ? 'None' : 'Lax'
+                );
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(["message" => "No se pudo cerrar la sesión."], 500);
+        }
     }
-    public function show(Publication $publication, User $user)
+    public function index()
     {
-        $user=$publication->users()->where('id', $user->id)->firstOrFail();
-        return response()->json($user, 200); 
+        $this->authorize('viewAny', User::class);
+        return User::all();
+    }
+    public function show(User $user){
+        $this->authorize('view', $user);
+        return response()->json(new UserResource($user),200);
+    }
+    public function update(Request $request, User $user)
+    {
+        $this->authorize('update',$user);
+        $request->validate([
+            'name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone'=> 'required|string',
+            'biography'=>'required|string',
+            'location' => 'required|string|max:500',            
+            'description' => 'required|string|max:1000',            
+            'cellphone' => 'required',
+            'image' => 'nullable|image',
+
+        ],self::$messages);
+
+        $user->update($request->all());
+        return response()->json($user, 200);
+    }
+    public function updateBusiness(Request $request, User $user)
+    {
+        $this->authorize('update',$user);
+        $request->validate([
+            'name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone'=> 'required|string',
+            'biography'=>'required|string',
+            'location' => 'required|string|max:500',            
+            'description' => 'required|string|max:1000',            
+            'cellphone' => 'required',
+            'image' => 'nullable|image',
+            'business_age'=>'nullable|string'
+
+        ],self::$messages);
+
+        $user->update($request->all());
+        return response()->json($user, 200);
+    }
+    public function delete(User $user)
+    {
+        $this->authorize('delete',$user);
+        $user->delete();
+        return response()->json(null, 204);
     }
 }
