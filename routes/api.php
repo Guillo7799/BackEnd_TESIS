@@ -32,11 +32,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Rutas para usuarios
     Route::get('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
-    //Route::get('users', 'App\Http\Controllers\UserController@index');
-    //Route::get('users/{user}', 'App\Http\Controllers\UserController@show');
-    //Route::put('users/{user}', 'App\Http\Controllers\UserController@update');
-    //Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
-    Route::post('logout', 'UserController@logout');
+    Route::get('users', 'App\Http\Controllers\UserController@index');
+    Route::get('users/{user}', 'App\Http\Controllers\UserController@show');
+    Route::put('users/{user}', 'App\Http\Controllers\UserController@update');
+    Route::put('users/{user}', 'App\Http\Controllers\UserController@updateBusiness');
+    Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
+    Route::post('logout', 'App\Http\Controllers\UserController@logout');
 
     // Rutas para Hojas de vida
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
