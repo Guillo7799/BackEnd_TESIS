@@ -40,6 +40,11 @@ class CVitaePolicy
         return $user->isGranted(User::ROLE_STUDENT);
     }
 
+    public function viewCVitaeUser(User $user, CVitae $cVitae)
+    {
+        return $user->isGranted(User::ROLE_STUDENT);
+    }
+
     /**
      * Determine whether the user can create models.
      *

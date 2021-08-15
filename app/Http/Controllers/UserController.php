@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Publication;
 use App\Models\Business;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Publication as PublicationResource;
+use App\Http\Resources\PublicationCollection;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -50,7 +53,7 @@ class UserController extends Controller
             'location'=>'required|string',
             'description' => 'required|string|max:1000',
             'cellphone' => 'required',
-            'image' => 'required|image', //verificar como hacerla opcional
+            'image' => 'nullable|image', //verificar como hacerla opcional
             'role'=>'required',
             //Validaciones para Empresa
             'ruc'=>'string|min:13|max:13',
@@ -67,7 +70,7 @@ class UserController extends Controller
             'business_type'=>$request->get('business_type'),
             'business_age'=>$request->get('business_age'),
         ]);               
-        $path = $request->image->store('public/images');
+        //$path = $request->image->store('public/images');
         $business -> user()->create([
             'name' => $request->get('name'),
             'last_name' => $request->get('last_name'),
@@ -80,7 +83,7 @@ class UserController extends Controller
             'description' => $request->get('description'),
             'career' => $request->get('career'),
             'cellphone' => $request->get('cellphone'),
-            'image' => $path,
+            //'image' => $path,
             'role'=>$request->get('role'),
         ]); 
         $user=$business->user;
@@ -116,7 +119,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }        
-        $path = $request->image->store('public/images');
+        //$path = $request->image->store('public/images');
         $user = User::create([
             'name' => $request->get('name'),
             'last_name' => $request->get('last_name'),
@@ -127,7 +130,7 @@ class UserController extends Controller
             'location' => $request->get('location'),
             'description' => $request->get('description'),
             'cellphone' => $request->get('cellphone'),
-            'image' => $path,
+            //'image' => $request->get('image'),
             'role'=>$request->get('role'),
         ]);
         $token = JWTAuth::fromUser($user);
@@ -184,6 +187,11 @@ class UserController extends Controller
             // something went wrong whilst attempting to encode the token
             return response()->json(["message" => "No se pudo cerrar la sesión."], 500);
         }
+    }
+    public function showUserPublications(User $user){
+        $this->authorize('viewUserPublications', User::class);
+        $publications = Publication::where('user_id', $user['id'])->get();
+        return response()->json(new PublicationCollection($publications), 200);
     }
     public function index()
     {
