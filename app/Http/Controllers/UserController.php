@@ -10,6 +10,9 @@ use App\Models\Business;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Publication as PublicationResource;
 use App\Http\Resources\PublicationCollection;
+use App\Models\CVitae;
+use App\Http\Resources\CVitae as CVitaeResource;
+use App\Http\Resources\CVitaeCollection;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -192,6 +195,11 @@ class UserController extends Controller
         $this->authorize('viewUserPublications', User::class);
         $publications = Publication::where('user_id', $user['id'])->get();
         return response()->json(new PublicationCollection($publications), 200);
+    }
+    public function showUserCurriculum(User $user){
+        $this->authorize('viewUserCurriculum', User::class);
+        $curriculum = CVitae::where('user_id', $user['id'])->get();
+        return response()->json(new CVitaeCollection($curriculum), 200);
     }
     public function index()
     {

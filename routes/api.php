@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 |
 */
 
-//Rutas públicas
+// Rutas públicas
 
 Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('businessregister', 'App\Http\Controllers\UserController@businessregister');
@@ -30,7 +30,7 @@ Route::get('categories', 'App\Http\Controllers\CategoryController@index');
 // Rutas privadas
 Route::group(['middleware' => ['jwt.verify']], function () {
 
-    //Rutas para usuarios
+    // Rutas para usuarios
     Route::get('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
     Route::get('users', 'App\Http\Controllers\UserController@index');
     Route::get('users/{user}', 'App\Http\Controllers\UserController@show');
@@ -38,7 +38,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('users/{user}', 'App\Http\Controllers\UserController@updateBusiness');
     Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
     Route::post('logout', 'App\Http\Controllers\UserController@logout');
+
+    // Ruta para ver las publicaciones del usuario
     Route::get('users/publications/{user}','App\Http\Controllers\UserController@showUserPublications');
+
+    // Ruta para ver el curriculum del usuario
+    Route::get('users/curriculum/{user}','App\Http\Controllers\UserController@showUserCurriculum');
 
     // Rutas para Hojas de vida
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
@@ -69,6 +74,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('categories/{category}', 'App\Http\Controllers\CategoryController@delete');
 
     //Rutas de postulantes por publicación
+    /*
     Route::get('publications/{publication}/users', 'App\Http\Controllers\UserController@index');
     Route::get('publications/{publication}/users/{user}', 'App\Http\Controllers\UserController@show');
+    */
 });
