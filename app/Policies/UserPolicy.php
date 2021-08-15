@@ -24,9 +24,12 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //return $user->isGranted(User::ROLE_STUDENT);
+        return $user->isGranted(User::ROLE_STUDENT);
     }
-
+    public function viewUserPublications(User $user)
+    {
+        return $user->isGranted(User::ROLE_BUSINESS);
+    }
     /**
      * Determine whether the user can view the model.
      *
@@ -36,7 +39,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        //return $user->isGranted(User::ROLE_STUDENT);
+        return $user->isGranted(User::ROLE_STUDENT);
     }
 
     /**
@@ -47,7 +50,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //return $user->isGranted(User::ROLE_STUDENT);
+        return $user->isGranted(User::ROLE_STUDENT);
     }
 
     /**

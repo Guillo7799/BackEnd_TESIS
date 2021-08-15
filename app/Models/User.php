@@ -71,15 +71,20 @@ class User extends Authenticatable implements JWTSubject
     }
     public function publications()
     {
-        return $this->belongsToMany('App\Publication')->withTimestamps();
+        return $this->belongsToMany('App\Models\Publication')->withTimestamps();
     }
+    /*
+    public function businessPublications()
+    {
+        return $this->hasMany('App\Models\Publications','user_id');
+    }*/
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Models\Comment');
     }
     public function cviates()
     {
-        return $this->hasOne('App\CVitae');
+        return $this->hasOne('App\Models\CVitae');
     }
     public function isGranted($role)
     {

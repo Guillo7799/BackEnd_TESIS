@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publication;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Publication as PublicationResource;
 use App\Http\Resources\PublicationCollection;
 use Illuminate\Http\Request;
@@ -29,6 +31,11 @@ class PublicationController extends Controller
     {
         //$this->authorize('viewAny', Publication::class);
         return new PublicationCollection(Publication::paginate(10));
+    }
+    public function showmypublications(Publication $publication)
+    {
+        $user = Auth::user();
+        return response()->json(PublicationResource::collection($user->$publication), 200);
     }
     public function show(Publication $publication)
     {
@@ -58,5 +65,10 @@ class PublicationController extends Controller
     {
         $publication->delete();
         return response()->json(null, 204);
+    }
+    public function showPublicationUser(User $user){
+        $this->authorize('viewPublicationUser', Publication::class);
+        $users = Publication::where('user_id','===','user.id')->get();
+        return response()->json(new PublicationCollection($users), 200);
     }
 }

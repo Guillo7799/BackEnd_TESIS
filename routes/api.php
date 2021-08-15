@@ -38,6 +38,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('users/{user}', 'App\Http\Controllers\UserController@updateBusiness');
     Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
     Route::post('logout', 'App\Http\Controllers\UserController@logout');
+    Route::get('users/publications/{user}','App\Http\Controllers\UserController@showUserPublications');
 
     // Rutas para Hojas de vida
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
@@ -45,12 +46,15 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('cvitaes', 'App\Http\Controllers\CVitaeController@store');
     Route::put('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@update');
     Route::delete('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@delete');
+    Route::get('cvitaes/filter', 'App\Http\Controllers\CVitaeController@showCVitaeUser');
 
     // Rutas para publicaciones de oferta
     Route::get('publications/{publication}', 'App\Http\Controllers\PublicationController@show');
     Route::post('publications', 'App\Http\Controllers\PublicationController@store');
     Route::put('publications/{publication}', 'App\Http\Controllers\PublicationController@update');
     Route::delete('publications/{publication}', 'App\Http\Controllers\PublicationController@delete');
+    Route::get('publications/filter/made-user','App\Http\Controllers\PublicationController@showPublicationUser');
+    
 
     //Rutas para comentarios
     Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');

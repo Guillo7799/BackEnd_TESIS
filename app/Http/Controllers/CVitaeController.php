@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CVitae;
+use App\Models\User;
 use App\Http\Resources\CVitae as CVitaeResource;
 use App\Http\Resources\CVitaeCollection;
 use Illuminate\Http\Request;
@@ -64,5 +65,16 @@ class CVitaeController extends Controller
     {
         $cVitae->delete();
         return response()->json(null, 204);
+    }
+    /*
+    public function filter(CVitae $cVitae, User $user)
+    {
+        $cVitaes=App\Models\CVitae::where('CVitae.user_id===User.id')->get();
+        return responde()->json(new CVitaeResource($cVitae), 200);
+    }*/
+    public function showCVitaeUser(){
+        $this->authorize('viewCVitaeUser', CVitae::class);
+        $users = CVitae::where('user_id','!=',NULL)->get();
+        return response()->json(new CVitaeResource($users), 200);
     }
 }
