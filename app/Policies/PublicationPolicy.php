@@ -32,6 +32,11 @@ class PublicationPolicy
     {
         return $user->isGranted(User::ROLE_BUSINESS);
     }
+
+    public function deletePublicationUser(User $user)
+    {
+        return $user->isGranted(User::ROLE_BUSINESS);
+    }
     /**
      * Determine whether the user can view the model.
      *
