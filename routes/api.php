@@ -42,6 +42,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Ruta para ver las publicaciones del usuario
     Route::get('users/publications/{user}','App\Http\Controllers\UserController@showUserPublications');
 
+    // Ruta para eliminar la publicación del usuario
+    Route::delete('users/publications/{user}','App\Http\Controllers\UserController@deleteUserPublications');
+
     // Ruta para ver el curriculum del usuario
     Route::get('users/curriculum/{user}','App\Http\Controllers\UserController@showUserCurriculum');
 

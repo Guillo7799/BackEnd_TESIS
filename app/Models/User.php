@@ -89,6 +89,10 @@ class User extends Authenticatable implements JWTSubject
     {
     return $this->hasMany('App\Models\Applications');
     }
+    public function categories()
+    {
+    return $this->hasMany('App\Models\Category');
+    }
     public function isGranted($role)
     {
         if ($role === $this->role) {
