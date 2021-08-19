@@ -36,6 +36,7 @@ class PublicationsTableSeeder extends Seeder
                     'description' => $faker->paragraph,
                     'hours' => $faker->sentence,
                     'date' => $faker->date,
+                    'user_id'=>$user->id,
                     'category_id' => $faker->numberBetween(1, 7),
                 ]);
             }

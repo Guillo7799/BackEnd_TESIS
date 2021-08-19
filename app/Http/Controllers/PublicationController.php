@@ -13,30 +13,31 @@ use Illuminate\Support\Facades\Validator;
 class PublicationController extends Controller
 {
     private static $rules=[
+        'business_name'=>'required',
         'career'=>'required',
         'description' => 'required|string|unique:publications|max:300',
         'hours' => 'required',
         'date'=> 'required',
+        'city'=>'required',
+        'contact_email'=>'required',
         'category_id' => 'required|exists:categories,id',
     ];
 
     private static $messages=[
+        'business_name'=>'Ingrese el nombre de su organización',
         'career.required' => 'Es necesario que ingrese la carrera de la que solicita un practicante',
         'description.required' => 'Falta la descripión, donde se incluye el tipo de actividades que realizaría el pasante',
         'hours.required' => 'Falta especificar cuantas horas deprácticas oferta',
         'date.required' => 'Falta el ingreso de fecha en la que realiza la publicación',
+        'city'=>'Falta que ingrese la ciudad',
+        'contact_email'=>'Ingrese un correo de contacto',
         'category_id.required' => 'Falta la categoría de la carrera',
     ];
     public function index()
     {
         //$this->authorize('viewAny', Publication::class);
         return new PublicationCollection(Publication::paginate(10));
-    }
-    public function showmypublications(Publication $publication)
-    {
-        $user = Auth::user();
-        return response()->json(PublicationResource::collection($user->$publication), 200);
-    }
+    }    
     public function show(Publication $publication)
     {
         $this->authorize('view', $publication);

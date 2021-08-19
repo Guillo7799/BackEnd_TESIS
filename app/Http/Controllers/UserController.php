@@ -116,13 +116,11 @@ class UserController extends Controller
             'location' => 'required|string|max:500',            
             'description' => 'required|string|max:1000',            
             'cellphone' => 'required',
-            'image' => 'nullable|image', //verificar como hacerla opcional
             'role'=>'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
-        }        
-        //$path = $request->image->store('public/images');
+        }
         $user = User::create([
             'name' => $request->get('name'),
             'last_name' => $request->get('last_name'),
@@ -133,7 +131,6 @@ class UserController extends Controller
             'location' => $request->get('location'),
             'description' => $request->get('description'),
             'cellphone' => $request->get('cellphone'),
-            //'image' => $request->get('image'),
             'role'=>$request->get('role'),
         ]);
         $token = JWTAuth::fromUser($user);
@@ -221,7 +218,6 @@ class UserController extends Controller
             'location' => 'required|string|max:500',            
             'description' => 'required|string|max:1000',            
             'cellphone' => 'required',
-            'image' => 'nullable|image',
 
         ],self::$messages);
 
@@ -239,7 +235,6 @@ class UserController extends Controller
             'location' => 'required|string|max:500',            
             'description' => 'required|string|max:1000',            
             'cellphone' => 'required',
-            'image' => 'nullable|image',
             'business_age'=>'nullable|string'
 
         ],self::$messages);

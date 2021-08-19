@@ -17,7 +17,8 @@ class CVitae extends Model
         'habilities',
         'certificates',
         'highschool_degree',
-        'work_experience'
+        'work_experience',
+        'image',
     ];
     public static function boot()
     {

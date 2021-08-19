@@ -10,10 +10,13 @@ class Publication extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'business_name',
         'career',
         'description', 
         'hours', 
         'date',
+        'city',
+        'contact_email',
         'category_id'
     ];
     public static function boot()
@@ -26,11 +29,16 @@ class Publication extends Model
 
     public function category()
     {
-        return $this->hasMany('App\Category');
+        return $this->hasMany('App\Models\Category');
     }
 
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\Models\User');
+    }
+
+    public function applications()
+    {
+    return $this->hasMany('App\Models\Applications');
     }
 }
