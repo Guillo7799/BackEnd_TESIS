@@ -47,6 +47,8 @@ class CVitaesTableSeeder extends Seeder
                     'certificates'=>$faker->paragraph,
                     'highschool_degree'=>$faker->sentence,
                     'work_experience'=>$faker->paragraph,
+                    'image' => $faker->imageUrl(400,300, null, false),
+                    'user_id'=>$user->id,
                 ]);
             }
         }

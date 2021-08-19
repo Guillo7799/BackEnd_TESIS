@@ -37,7 +37,6 @@ class UsersTableSeeder extends Seeder
             'location'=>'Valle',
             'description' => 'Estudiante de la EPN en Desarrollo de Software',            
             'cellphone' => '0960625886',
-            'image' => $faker->imageUrl(400,300, null, false),
             'role'=> User::ROLE_SUPERADMIN,
         ]);
         // Generar algunos usuarios para nuestra aplicacion
@@ -59,7 +58,6 @@ class UsersTableSeeder extends Seeder
                 'location'=>$faker->sentence,                            
                 'description' => $faker->paragraph,                
                 'cellphone' => $faker->phoneNumber,
-                'image' => $faker->imageUrl(400,300, null, false),
                 'role'=> User::ROLE_BUSINESS,
             ]);    
                    
@@ -75,7 +73,6 @@ class UsersTableSeeder extends Seeder
                 'location'=>$faker->sentence,                
                 'description' => $faker->paragraph,                
                 'cellphone' => $faker->phoneNumber,
-                'image' => $faker->imageUrl(400,300, null, false),
                 'role'=> User::ROLE_STUDENT,
             ]);  
         }    

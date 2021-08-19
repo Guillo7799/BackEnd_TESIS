@@ -29,6 +29,7 @@ class CommentsTableSeeder extends Seeder
             for ($i = 0; $i < 4 ; $i++) {
                 Comment::create([
                     'content' => $faker->paragraph,
+                    'user_id'=>$user->id,
                 ]);
             }
         }

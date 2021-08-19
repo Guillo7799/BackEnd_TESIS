@@ -15,10 +15,13 @@ class CreatePublicationsTable extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
+            $table->string('business_name');
             $table->string('career', 200);
             $table->text('description');
             $table->string('hours', 100);
             $table->dateTime('date');
+            $table->string('city');
+            $table->string('contact_email');
             $table->timestamps();
         });
         Schema::create('publication_user', function (Blueprint $table) {

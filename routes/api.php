@@ -52,6 +52,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@update');
     Route::delete('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@delete');
     Route::get('cvitaes/filter', 'App\Http\Controllers\CVitaeController@showCVitaeUser');
+    Route::get('cvitaes/{cvitae}/image', 'App\Http\Controllers\CVitaeController@image');
 
     // Rutas para publicaciones de oferta
     Route::get('publications/{publication}', 'App\Http\Controllers\PublicationController@show');
@@ -61,21 +62,21 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('publications/filter/made-user','App\Http\Controllers\PublicationController@showPublicationUser');
     
 
-    //Rutas para comentarios
+    // Rutas para comentarios
     Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');
     Route::post('comments', 'App\Http\Controllers\CommentController@store');
     Route::put('comments/{comment}', 'App\Http\Controllers\CommentController@update');
     Route::delete('comments/{comment}', 'App\Http\Controllers\CommentController@delete');
 
-    //Rutas para las categorías
+    // Rutas para las categorías
     Route::get('categories/{category}', 'App\Http\Controllers\CategoryController@show');
     Route::post('categories', 'App\Http\Controllers\CategoryController@store');
     Route::put('categories/{category}', 'App\Http\Controllers\CategoryController@update');
     Route::delete('categories/{category}', 'App\Http\Controllers\CategoryController@delete');
 
-    //Rutas de postulantes por publicación
-    /*
-    Route::get('publications/{publication}/users', 'App\Http\Controllers\UserController@index');
-    Route::get('publications/{publication}/users/{user}', 'App\Http\Controllers\UserController@show');
-    */
+    // Rutas para postulaciones
+    Route::get('applications/{application}', 'App\Http\Controllers\ApplicationController@show');
+    Route::post('applications', 'App\Http\Controllers\ApplicationController@store');
+    Route::delete('applications/{application}', 'App\Http\Controllers\ApplicationController@delete');
+    Route::get('applications/filter/made-user','App\Http\Controllers\PostulationController@showApplicationUser');
 });

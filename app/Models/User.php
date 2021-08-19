@@ -27,7 +27,6 @@ class User extends Authenticatable implements JWTSubject
         'location',
         'description',
         'cellphone',
-        'image',
         'role',
     ];
 
@@ -85,6 +84,10 @@ class User extends Authenticatable implements JWTSubject
     public function cviates()
     {
         return $this->hasOne('App\Models\CVitae');
+    }
+    public function applications()
+    {
+    return $this->hasMany('App\Models\Applications');
     }
     public function isGranted($role)
     {

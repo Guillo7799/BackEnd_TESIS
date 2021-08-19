@@ -20,6 +20,7 @@ class CVitaeController extends Controller
         'certificates'=>'required|string|max:3000',
         'highschool_degree'=>'required|string|max:500',
         'work_experience'=>'required|string|max:3000',
+        'image' => 'required|image',
     ];
 
     private static $messages=[
@@ -31,6 +32,7 @@ class CVitaeController extends Controller
         'certificates'=>'required|string|max:3000',
         'highschool_degree'=>'required|string|max:500',
         'work_experience'=>'required|string|max:3000',
+        'image' => 'required|image',
     ];
 
     public function index()
@@ -47,7 +49,15 @@ class CVitaeController extends Controller
     
         $request -> validate(self::$rules, self::$messages);
         $cVitae = CVitae::create($request->all());
+        $path = $request->image->store('cvitaes');
+        $cVitae->image = $path;
+        $cVitae->save();
         return response()->json($cVitae, 201);
+    }
+    public function image(CVitae $cVitae)
+    {
+    return response()->download(public_path(Storage::url($cVitae->image)),
+    $cVitae->title);
     }
     public function update(Request $request, CVitae $cVitae)
     {
@@ -57,6 +67,7 @@ class CVitaeController extends Controller
             'habilities' => 'required|string|unique:curriculums,habilities,'.$curriculum->id.'|max:1000',
             'certificates' => 'required|string|max:3000',
             'work_experience'=>'required|string|max:3000',
+            'image' => 'required|image',
         ], self::$messages);
         $cVitae->update($request->all());
         return response()->json($cVitae, 200);
@@ -66,12 +77,6 @@ class CVitaeController extends Controller
         $cVitae->delete();
         return response()->json(null, 204);
     }
-    /*
-    public function filter(CVitae $cVitae, User $user)
-    {
-        $cVitaes=App\Models\CVitae::where('CVitae.user_id===User.id')->get();
-        return responde()->json(new CVitaeResource($cVitae), 200);
-    }*/
     public function showCVitaeUser(){
         $this->authorize('viewCVitaeUser', CVitae::class);
         $users = CVitae::where('user_id','!=',NULL)->get();
