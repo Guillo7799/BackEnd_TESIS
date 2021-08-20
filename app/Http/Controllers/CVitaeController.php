@@ -24,15 +24,15 @@ class CVitaeController extends Controller
     ];
 
     private static $messages=[
-        'university' => 'Falta la universidad en la que estudias',
-        'career'=>'Falta ingresar la carrera que sigues',
-        'language'=>'Falta que ingrese otro idioma a parte del nativo',
-        'level_language'=>'Falta que ingrese el nivel que tienes en el idioma',
-        'habilities'=>'required|string|max:1000',
-        'certificates'=>'required|string|max:3000',
-        'highschool_degree'=>'required|string|max:500',
-        'work_experience'=>'required|string|max:3000',
-        'image' => 'required|image',
+        'university.required' => 'Falta la universidad en la que estudias',
+        'career.required'=>'Falta ingresar la carrera que sigues',
+        'language.required'=>'Falta que ingrese otro idioma a parte del nativo',
+        'level_language.required'=>'Falta que ingrese el nivel que tienes en el idioma',
+        'habilities.required'=>'required|string|max:1000',
+        'certificates.required'=>'required|string|max:3000',
+        'highschool_degree.required'=>'required|string|max:500',
+        'work_experience.required'=>'required|string|max:3000',
+        'image.required' => 'image',
     ];
 
     public function index()
@@ -49,7 +49,7 @@ class CVitaeController extends Controller
     
         $request -> validate(self::$rules, self::$messages);
         $cVitae = CVitae::create($request->all());
-        $path = $request->image->store('cvitaes');
+        $path = $request->image->store('public/cvitaes');
         $cVitae->image = $path;
         $cVitae->save();
         return response()->json($cVitae, 201);
@@ -67,7 +67,7 @@ class CVitaeController extends Controller
             'habilities' => 'required|string|unique:curriculums,habilities,'.$curriculum->id.'|max:1000',
             'certificates' => 'required|string|max:3000',
             'work_experience'=>'required|string|max:3000',
-            'image' => 'required|image',
+            'image' => 'image',
         ], self::$messages);
         $cVitae->update($request->all());
         return response()->json($cVitae, 200);
