@@ -8,6 +8,7 @@ use App\Http\Resources\CVitae as CVitaeResource;
 use App\Http\Resources\CVitaeCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class CVitaeController extends Controller
 {
@@ -28,7 +29,7 @@ class CVitaeController extends Controller
         'career.required'=>'Falta ingresar la carrera que sigues',
         'language.required'=>'Falta que ingrese otro idioma a parte del nativo',
         'level_language.required'=>'Falta que ingrese el nivel que tienes en el idioma',
-        'habilities.required'=>'required|string|max:1000',
+        'habilities.required'=>'required|string|unique:c_viates|max:1000',
         'certificates.required'=>'required|string|max:3000',
         'highschool_degree.required'=>'required|string|max:500',
         'work_experience.required'=>'required|string|max:3000',
@@ -49,7 +50,7 @@ class CVitaeController extends Controller
     
         $request -> validate(self::$rules, self::$messages);
         $cVitae = CVitae::create($request->all());
-        $path = $request->image->store('public/cvitaes');
+        $publication->image = 'cvitaes/' . basename($path);
         $cVitae->image = $path;
         $cVitae->save();
         return response()->json($cVitae, 201);
@@ -82,4 +83,9 @@ class CVitaeController extends Controller
         $users = CVitae::where('user_id','!=',NULL)->get();
         return response()->json(new CVitaeResource($users), 200);
     }
+
+    public function images(CVitae $cVitae){
+        return response()->download(public_path(Storage::url($cVitae->image)), $cVitae->habilities);
+    }
+
 }
