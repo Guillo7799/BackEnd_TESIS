@@ -47,6 +47,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Ruta para ver el curriculum del usuario
     Route::get('users/curriculum/{user}','App\Http\Controllers\UserController@showUserCurriculum');
+    
+    // Ruta para imágenes
+    Route::get('users/curriculums/user/{curriculum}/image', 'App\Http\Controllers\CVitaeController@images');
 
     // Rutas para Hojas de vida
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
@@ -55,7 +58,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@update');
     Route::delete('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@delete');
     Route::get('cvitaes/filter', 'App\Http\Controllers\CVitaeController@showCVitaeUser');
-    Route::get('cvitaes/{cvitae}/image', 'App\Http\Controllers\CVitaeController@image');
 
     // Rutas para publicaciones de oferta
     Route::get('publications/{publication}', 'App\Http\Controllers\PublicationController@show');
@@ -63,7 +65,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::put('publications/{publication}', 'App\Http\Controllers\PublicationController@update');
     Route::delete('publications/{publication}', 'App\Http\Controllers\PublicationController@delete');
     Route::get('publications/filter/made-user','App\Http\Controllers\PublicationController@showPublicationUser');
-    
 
     // Rutas para comentarios
     Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');
