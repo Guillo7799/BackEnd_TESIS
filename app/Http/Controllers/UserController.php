@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Publication;
+use App\Models\Application;
 use App\Models\Business;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Publication as PublicationResource;
@@ -13,6 +14,8 @@ use App\Http\Resources\PublicationCollection;
 use App\Models\CVitae;
 use App\Http\Resources\CVitae as CVitaeResource;
 use App\Http\Resources\CVitaeCollection;
+use App\Http\Resources\Application as ApplicationResource;
+use App\Http\Resources\ApplicationCollection;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -197,6 +200,11 @@ class UserController extends Controller
         $this->authorize('viewUserCurriculum', User::class);
         $curriculum = CVitae::where('user_id', $user['id'])->get();
         return response()->json(new CVitaeCollection($curriculum), 200);
+    }
+    public function showUserApplication(User $user){
+        $this->authorize('viewUserApplication', User::class);
+        $application = Application::where('user_id', $user['id'])->get();
+        return response()->json(new ApplicationCollection($application), 200);
     }
     public function index()
     {

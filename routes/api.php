@@ -40,7 +40,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('logout', 'App\Http\Controllers\UserController@logout');
 
     // Ruta para ver las publicaciones del usuario
-    Route::get('users/publications/{user}','App\Http\Controllers\UserController@showUserPublications');
+    Route::get('/users/publications/{user}','App\Http\Controllers\UserController@showUserPublications');
+
+    // Ruta para ver la solicitud del usuario
+    Route::get('users/applications/{user}','App\Http\Controllers\UserController@showUserApplication');
 
     // Ruta para eliminar la publicación del usuario
     Route::delete('users/publications/{user}','App\Http\Controllers\UserController@deleteUserPublications');

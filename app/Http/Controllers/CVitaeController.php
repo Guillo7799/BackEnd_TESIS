@@ -78,9 +78,9 @@ class CVitaeController extends Controller
         $cVitae->delete();
         return response()->json(null, 204);
     }
-    public function showCVitaeUser(){
+    public function showCVitaeUser(User $user){
         $this->authorize('viewCVitaeUser', CVitae::class);
-        $users = CVitae::where('user_id','!=',NULL)->get();
+        $users = CVitae::where('user_id','===','user.id')->get();
         return response()->json(new CVitaeResource($users), 200);
     }
 
