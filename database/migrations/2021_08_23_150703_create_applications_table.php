@@ -18,6 +18,7 @@ class CreateApplicationsTable extends Migration
             $table->string('name');
             $table->string('last_name');
             $table->text('message');
+            $table->enum('status',['Pendiente','Revisado','Por Contactar'])->default('Pendiente');
             $table->unsignedBigInteger('publication_id');
             $table->foreign('publication_id')->references('id')->on('publications')->onDelete('restrict');
             $table->unsignedBigInteger('user_id');

@@ -67,12 +67,7 @@ class PublicationController extends Controller
         $publication->delete();
         return response()->json(null, 204);
     }
-    public function showPublicationUser(User $user){
-        $this->authorize('viewPublicationUser', Publication::class);
-        $users = Publication::where('user_id','===','user.id')->get();
-        return response()->json(new PublicationCollection($users), 200);
-    }
-    public function deltePublicationUser(User $user, Publication $publication){
+    public function deletePublicationUser(User $user, Publication $publication){
         $this->authorize('deletePublicationUser', Publication::class);
         $users = Publication::where('user_id','===','user.id')->get();
         $publication->delete();

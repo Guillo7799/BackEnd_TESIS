@@ -6,13 +6,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Applications extends Model
+class Application extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'last_name',
         'message',
+        'status',
         'publication_id',
     ];
     public static function boot()
@@ -32,5 +34,4 @@ class Applications extends Model
     {
     return $this->belongsTo('App\Models\Publication');
     }
-    
 }

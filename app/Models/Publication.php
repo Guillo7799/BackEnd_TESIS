@@ -37,8 +37,8 @@ class Publication extends Model
         return $this->belongsToMany('App\Models\User');
     }
 
-    public function applications()
+    public function application()
     {
-    return $this->hasMany('App\Models\Applications');
+    return $this->hasMany('App\Models\Application');
     }
 }
