@@ -18,9 +18,9 @@ class Application extends JsonResource
     {
        return [
             'id' => $this->id,
-            'name' => $this->career,
-            'last_name' => $this->description,
-            'message' => $this->hours,
+            'name' => $this->name,
+            'last_name' => $this->last_name,
+            'message' => $this->message,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user' => '/api/users/' . $this->user_id,
