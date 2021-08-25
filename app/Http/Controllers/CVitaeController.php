@@ -29,11 +29,11 @@ class CVitaeController extends Controller
         'career.required'=>'Falta ingresar la carrera que sigues',
         'language.required'=>'Falta que ingrese otro idioma a parte del nativo',
         'level_language.required'=>'Falta que ingrese el nivel que tienes en el idioma',
-        'habilities.required'=>'required|string|unique:c_viates|max:1000',
-        'certificates.required'=>'required|string|max:3000',
-        'highschool_degree.required'=>'required|string|max:500',
-        'work_experience.required'=>'required|string|max:3000',
-        'image.required' => 'image',
+        'habilities.required'=>'Falta que ingrese sus habilidades',
+        'certificates.required'=>'Los certificados son requeridos',
+        'highschool_degree.required'=>'Ingrese su título de segundo nivel',
+        'work_experience.required'=>'Ingrese su experiencia laboral',
+        'image.required' => 'Se necesita la imagen del curriculum',
     ];
 
     public function index()
@@ -42,6 +42,7 @@ class CVitaeController extends Controller
     }
     public function show(CVitae $cVitae)
     {
+        $this->authorize('view', $cVitae);
         return response()->json(new CVitaeResource($cVitae), 200);
     }
     public function store(Request $request)
@@ -50,8 +51,8 @@ class CVitaeController extends Controller
     
         $request -> validate(self::$rules, self::$messages);
         $cVitae = CVitae::create($request->all());
-        $publication->image = 'cvitaes/' . basename($path);
-        $cVitae->image = $path;
+        $path = $request->image->store('public/cvitaes');
+        $cVitae->image = 'cvitaes/' . basename($path);
         $cVitae->save();
         return response()->json($cVitae, 201);
     }
