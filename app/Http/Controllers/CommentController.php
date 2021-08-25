@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Comment as CommentResource;
 use App\Http\Resources\CommentCollection;
 use Illuminate\Http\Request;
@@ -41,5 +43,10 @@ class CommentController extends Controller
     {
         $comment->delete();
         return response()->json(null, 204);
+    }
+    public function commentsbyUser()
+    {
+        $user=Auth::user();
+        return response()->json(new CommentCollection($user), 200);
     }
 }

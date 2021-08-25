@@ -72,11 +72,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\Models\Publication')->withTimestamps();
     }
-    /*
-    public function businessPublications()
-    {
-        return $this->hasMany('App\Models\Publications','user_id');
-    }*/
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
@@ -85,9 +80,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\Models\CVitae');
     }
-    public function applicatio()
+    public function applications()
     {
-    return $this->hasMany('App\Models\Applications');
+    return $this->hasMany('App\Models\Application');
     }
     public function categories()
     {

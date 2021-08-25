@@ -38,6 +38,10 @@ class UserPolicy
     {
         return $user->isGranted(User::ROLE_STUDENT);
     }
+    public function viewApplicationPublicationUser(User $user)
+    {
+        return $user->isGranted(User::ROLE_BUSINESS);
+    }
     /**
      * Determine whether the user can view the model.
      *
