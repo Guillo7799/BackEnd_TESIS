@@ -23,9 +23,12 @@ class Application extends JsonResource
             'last_name'=>$this->last_name,
             'message'=>$this->message,
             'status'=>$this->status,
-            'user' => /*'/api/users/' .*/ $this->user_id,
-            'publication'=>/*'api/publications/'.*/$this->publication_id,
+            'user' =>$this->user_id,
+            'publication'=>$this->publication_id,
             'business_name'=>$this->publication->business_name,
+            'career'=>$this->publication->career,
+            'description'=>$this->publication->description,
+            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
     }
