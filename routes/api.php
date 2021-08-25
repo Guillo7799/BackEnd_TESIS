@@ -90,4 +90,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('applications', 'App\Http\Controllers\ApplicationController@store');
     Route::put('applications/{application}', 'App\Http\Controllers\ApplicationController@update');
     Route::delete('applications/{application}', 'App\Http\Controllers\ApplicationController@delete');
+
+    // Ruta oara visualizar el nombre de la publicación de una postulación
+    Route::get('users/{user}/publication/application','App\Http\Controllers\UserController@showApplicationPublication');
+
+    // Ruta para ver los comentarios del usuario
+    Route::get('users/{user}/comments','App\Http\Controllers\CommentController@commentsbyUser');
 });

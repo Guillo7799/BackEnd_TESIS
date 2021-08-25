@@ -206,6 +206,14 @@ class UserController extends Controller
         $application = Application::where('user_id', $user['id'])->get();
         return response()->json(new ApplicationCollection($application), 200);
     }
+    public function showApplicationPublication()
+    {
+        $user=Auth::user();
+        $this->authorize('viewApplicationPublicationUser', User::class);
+        $publications= Publication::where('user_id', $user['id'])->get();
+        $details= Application::where('publication_id', ($publications[0]->id))->get();
+        return response()->json(new ApplicationCollection($details), 200);
+    } 
     public function index()
     {
         $this->authorize('viewAny', User::class);

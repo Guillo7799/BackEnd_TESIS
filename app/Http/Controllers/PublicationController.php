@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publication;
+use App\Models\Application;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Application as ApplicationResource;
+use App\Http\Resources\ApplicationCollection;
 use App\Http\Resources\Publication as PublicationResource;
 use App\Http\Resources\PublicationCollection;
 use Illuminate\Http\Request;
@@ -72,5 +75,5 @@ class PublicationController extends Controller
         $users = Publication::where('user_id','===','user.id')->get();
         $publication->delete();
         return response()->json(null, 204);
-    }
+    }  
 }

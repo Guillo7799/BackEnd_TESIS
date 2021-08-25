@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\User;
+use App\Models\Publication;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Application as ApplicationResource;
 use App\Http\Resources\ApplicationCollection;
@@ -15,7 +16,7 @@ class ApplicationController extends Controller
     private static $rules=[
         'name'=>'required',
         'last_name' => 'required',
-        'message' => 'required',
+        'message' => 'required|string|unique:applications|max:1000',
         'publication_id' => 'required|exists:publications,id',
     ];
 
@@ -43,13 +44,17 @@ class ApplicationController extends Controller
         $application = Application::create($request->all());
         return response()->json($application, 201);
     }
+    public function applicationsToUser( )
+    {
+        $user = Auth::user();
+        return new ApplicationCollection($user->application);
+    }
     public function update(Request $request, Publication $publication)
     {
         $this->authorize('update',$publication);
 
         $request->validate([
-            'description' => 'required|string|unique:publications,description,'.$publication->id.'|max:300',
-            'hours' => 'required',
+            'status' => 'required|string|unique:applications,message,'.$message->id.'|max:1000',
         ], self::$messages);
         $publication->update($request->all());
         return response()->json($publication, 200);
@@ -58,5 +63,5 @@ class ApplicationController extends Controller
     {
         $application->delete();
         return response()->json(null, 204);
-    }      
+    }   
 }
