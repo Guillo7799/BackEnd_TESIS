@@ -25,6 +25,7 @@ Route::post('businessregister', 'App\Http\Controllers\UserController@businessreg
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::get('publications', 'App\Http\Controllers\PublicationController@index');
 Route::get('comments', 'App\Http\Controllers\CommentController@index');
+Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');
 Route::get('categories', 'App\Http\Controllers\CategoryController@index');
 
 // Rutas privadas
@@ -67,11 +68,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('publications/{publication}', 'App\Http\Controllers\PublicationController@delete');
     Route::get('publications/filter/made-user','App\Http\Controllers\PublicationController@showPublicationUser');
 
-    // Rutas para comentarios
-    Route::get('comments', 'App\Http\Controllers\CommentController@index');
-    Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');
+    // Rutas para comentarios    
     Route::post('comments', 'App\Http\Controllers\CommentController@store');
-    Route::put('comments/{comment}', 'App\Http\Controllers\CommentController@update');
     Route::delete('comments/{comment}', 'App\Http\Controllers\CommentController@delete');
 
     // Rutas para las categorías
