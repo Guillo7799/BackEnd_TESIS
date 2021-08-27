@@ -50,9 +50,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Ruta para ver el curriculum del usuario
     Route::get('users/curriculum/{user}','App\Http\Controllers\UserController@showUserCurriculum');
-    
-    // Ruta para imágenes
-    Route::get('users/curriculums/user/{curriculum}/image', 'App\Http\Controllers\CVitaeController@images');
 
     // Rutas para Hojas de vida
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
@@ -94,6 +91,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Ruta oara visualizar el nombre de la publicación de una postulación
     Route::get('users/{user}/publication/application','App\Http\Controllers\UserController@showApplicationPublication');
 
-    // Ruta para ver los comentarios del usuario
-    Route::get('users/{user}/comments','App\Http\Controllers\CommentController@commentsbyUser');
+    // Ruta para actualizar la postulación a una publicación por parte de la empresa
+    Route::put('users/{user}/publication/application','App\Http\Controllers\UserController@UpdateShowApplicationPublication');
 });

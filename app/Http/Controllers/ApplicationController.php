@@ -49,15 +49,14 @@ class ApplicationController extends Controller
         $user = Auth::user();
         return new ApplicationCollection($user->application);
     }
-    public function update(Request $request, Publication $publication)
+    public function update(Request $request, Application $application)
     {
-        $this->authorize('update',$publication);
-
+        $this->authorize('update',$application);
         $request->validate([
-            'status' => 'required|string|unique:applications,message,'.$message->id.'|max:1000',
+            'status' => 'required',
         ], self::$messages);
-        $publication->update($request->all());
-        return response()->json($publication, 200);
+        $application->update($request->all());
+        return response()->json($application, 200);
     }
     public function delete(Application $application)
     {

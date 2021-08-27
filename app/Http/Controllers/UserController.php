@@ -23,6 +23,9 @@ use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
+    private static $messages=[
+        'status.required' => 'Ingrese el nuevo estado de la postulación',
+    ];
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -213,7 +216,20 @@ class UserController extends Controller
         $publications= Publication::where('user_id', $user['id'])->get();
         $details= Application::where('publication_id', ($publications[0]->id))->get();
         return response()->json(new ApplicationCollection($details), 200);
-    } 
+    }
+    public function UpdateShowApplicationPublication(Application $application)
+    {
+        $this->authorize('updateApplicationPublication', User::class);
+        $user=Auth::user();
+        $publications= Publication::where('user_id', $user['id'])->get();
+        $details= Application::where('publication_id', ($publications[0]->id))->get();
+        $details->validate([
+            'status' => 'required',
+        ], self::$messages);
+        $application->update($details());
+        //dd($request);
+        return response()->json(new ApplicationCollection($details), 200);
+    }
     public function index()
     {
         $this->authorize('viewAny', User::class);
@@ -221,7 +237,7 @@ class UserController extends Controller
     }
     public function show(User $user){
         $this->authorize('view', $user);
-        return response()->json(new UserResource($user),200);
+        return response()->json(UserResource::collection($user),200);
     }
     public function update(Request $request, User $user)
     {
