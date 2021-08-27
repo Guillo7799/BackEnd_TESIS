@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Application;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -39,6 +40,10 @@ class UserPolicy
         return $user->isGranted(User::ROLE_STUDENT);
     }
     public function viewApplicationPublicationUser(User $user)
+    {
+        return $user->isGranted(User::ROLE_BUSINESS);
+    }
+    public function updateApplicationPublication(User $user)
     {
         return $user->isGranted(User::ROLE_BUSINESS);
     }

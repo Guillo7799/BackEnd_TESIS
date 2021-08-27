@@ -25,6 +25,7 @@ class Application extends JsonResource
             'status'=>$this->status,
             'user' =>$this->user_id,
             'publication'=>$this->publication_id,
+            //'business_name'=> new PublicationResource(Publication::find($this->business_name)),
             'business_name'=>$this->publication->business_name,
             'career'=>$this->publication->career,
             'description'=>$this->publication->description,
