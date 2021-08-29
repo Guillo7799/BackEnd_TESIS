@@ -17,6 +17,7 @@ class CVitae extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id'=>$this->user_id,
             'university' => $this->university,
             'career' => $this->career,
             'language' => $this->language,

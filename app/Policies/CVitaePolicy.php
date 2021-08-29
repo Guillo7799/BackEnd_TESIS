@@ -65,7 +65,7 @@ class CVitaePolicy
      */
     public function update(User $user, CVitae $cVitae)
     {
-        return $user->isGranted(User::ROLE_STUDENT) && $user->id === $cVitae->user_id;
+        return $user->isGranted(User::ROLE_STUDENT);
     }
 
     /**
