@@ -66,10 +66,9 @@ class CVitaeController extends Controller
         $this->authorize('update',$cVitae);
 
         $request->validate([
-            'habilities' => 'required|string|unique:curriculums,habilities,'.$curriculum->id.'|max:1000',
+            'habilities' => 'required|string|unique:c_vitaes,habilities,'.$cVitae->id.'|max:1000',
             'certificates' => 'required|string|max:3000',
             'work_experience'=>'required|string|max:3000',
-            'image' => 'image',
         ], self::$messages);
         $cVitae->update($request->all());
         return response()->json($cVitae, 200);

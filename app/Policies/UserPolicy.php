@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Application;
+use App\Models\CVitae;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -31,9 +32,17 @@ class UserPolicy
     {
         return $user->isGranted(User::ROLE_BUSINESS);
     }
+    public function deleteUserPublications(User $user)
+    {
+        return $user->isGranted(User::ROLE_BUSINESS);
+    }
     public function viewUserCurriculum(User $user)
     {
         return $user->isGranted(User::ROLE_STUDENT);
+    }
+    public function updateUserCurriculum(User $user, CVitae $model)
+    {
+        return $user->isGranted(User::ROLE_STUDENT) && $user->id === $model->user_id;
     }
     public function viewUserApplication(User $user)
     {

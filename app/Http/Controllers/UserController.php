@@ -26,6 +26,11 @@ class UserController extends Controller
     private static $messages=[
         'status.required' => 'Ingrese el nuevo estado de la postulación',
     ];
+    private static $curriculumMessages=[
+        'habilities.required'=>'Falta que ingrese sus habilidades',
+        'certificates.required'=>'Los certificados son requeridos',
+        'work_experience.required'=>'Ingrese su experiencia laboral',
+    ];
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -198,23 +203,43 @@ class UserController extends Controller
         $this->authorize('viewUserPublications', User::class);
         $publications = Publication::where('user_id', $user['id'])->get();
         return response()->json(new PublicationCollection($publications), 200);
-    }
+    }/*
+    public function deleteUserPublications(User $user)
+    {
+        $this->authorize('deleteUserPublications',User::class);
+        $publications = Publication::where('user_id', $user['id'])->get();
+        $publications[0]->delete();
+        return response()->json(null, 204);
+    }*/
     public function showUserCurriculum(User $user){
         $this->authorize('viewUserCurriculum', User::class);
         $curriculum = CVitae::where('user_id', $user['id'])->get();
         return response()->json(new CVitaeCollection($curriculum), 200);
+    }
+    public function updateUserCurriculum(Request $request, User $user)
+    {
+        $this->authorize('updateUserCurriculum',User::class);
+        $curriculum = CVitae::where('user_id', $user['id'])->get();
+        $request->validate([
+            'habilities' => 'required|string|unique:curriculums,habilities,'.$curriculum->id.'|max:1000',
+            'certificates' => 'required|string|max:3000',
+            'work_experience'=>'required|string|max:3000',
+        ], self::$curriculumMessages);
+        $curriculum->update($request->all());
+        return response()->json($curriculum, 200);
     }
     public function showUserApplication(User $user){
         $this->authorize('viewUserApplication', User::class);
         $application = Application::where('user_id', $user['id'])->get();
         return response()->json(new ApplicationCollection($application), 200);
     }
-    public function showApplicationPublication()
+    public function showApplicationPublication(User $user)
     {
-        $user=Auth::user();
-        $this->authorize('viewApplicationPublicationUser', User::class);
+        //$user=Auth::user();
+        //$this->authorize('viewApplicationPublicationUser', User::class);
         $publications= Publication::where('user_id', $user['id'])->get();
         $details= Application::where('publication_id', ($publications[0]->id))->get();
+        //dd($details);
         return response()->json(new ApplicationCollection($details), 200);
     }
     public function UpdateShowApplicationPublication(Application $application)
