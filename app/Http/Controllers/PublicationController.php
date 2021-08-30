@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Publication;
 use App\Models\Application;
 use App\Models\User;
+use App\Models\Category;
+use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\CategoryCollection;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Application as ApplicationResource;
 use App\Http\Resources\ApplicationCollection;
@@ -39,7 +42,7 @@ class PublicationController extends Controller
     public function index()
     {
         //$this->authorize('viewAny', Publication::class);
-        return new PublicationCollection(Publication::paginate(10));
+        return new PublicationCollection(Publication::paginate(5));
     }    
     public function show(Publication $publication)
     {
@@ -53,6 +56,12 @@ class PublicationController extends Controller
         $request->validate(self::$rules, self::$messages);
         $publication = Publication::create($request->all());
         return response()->json($publication, 201);
+    }
+    public function publicationFilter(Category $category)
+    {
+        $this->authorize('filter', Publication::class);
+        $publication=Publication::where('category_id',$category['id'])->get();
+        return response()->json(new PublicationCollection($publication),200);
     }
     public function update(Request $request, Publication $publication)
     {

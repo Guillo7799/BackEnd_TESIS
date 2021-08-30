@@ -53,6 +53,10 @@ class PublicationPolicy
     {
         return $user->isGranted(User::ROLE_STUDENT);
     }
+    public function filter(User $user)
+    {
+        return $user->isGranted(User::ROLE_STUDENT);
+    }
 
     /**
      * Determine whether the user can create models.
