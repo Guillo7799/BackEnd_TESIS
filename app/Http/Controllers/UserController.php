@@ -241,7 +241,17 @@ class UserController extends Controller
         $details= Application::where('publication_id', ($publications[0]->id))->get();
         //dd($details);
         return response()->json(new ApplicationCollection($details), 200);
-    }
+    }/*
+    public function showApplicationPublication(User $user)
+    {
+        //$user=Auth::user();
+        //$this->authorize('viewApplicationPublicationUser', User::class);
+        $publications= Publication::where('user_id', $user['id'])->get();
+        $applicatons = Application::all();
+        $details=   whereIn(($applications->publication), $publications)->get();
+        //dd($details);
+        return response()->json(new ApplicationCollection($details), 200);
+    }*/
     public function UpdateShowApplicationPublication(Application $application)
     {
         $this->authorize('updateApplicationPublication', User::class);
@@ -268,10 +278,6 @@ class UserController extends Controller
     {
         $this->authorize('update',$user);
         $request->validate([
-            'name' => 'required|string',
-            'last_name' => 'required|string',
-            'phone'=> 'required|string',
-            'biography'=>'required|string',
             'location' => 'required|string|max:500',            
             'description' => 'required|string|max:1000',            
             'cellphone' => 'required',
@@ -283,19 +289,12 @@ class UserController extends Controller
     }
     public function updateBusiness(Request $request, User $user)
     {
-        $this->authorize('update',$user);
+        $this->authorize('updateBusiness',$user);
         $request->validate([
-            'name' => 'required|string',
-            'last_name' => 'required|string',
-            'phone'=> 'required|string',
-            'biography'=>'required|string',
-            'location' => 'required|string|max:500',            
-            'description' => 'required|string|max:1000',            
+            'location' => 'required|string|max:500',  
+            'description' => 'required|string|max:1000',
             'cellphone' => 'required',
-            'business_age'=>'nullable|string'
-
         ],self::$messages);
-
         $user->update($request->all());
         return response()->json($user, 200);
     }

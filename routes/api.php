@@ -23,11 +23,9 @@ use Illuminate\Support\Str;
 Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('businessregister', 'App\Http\Controllers\UserController@businessregister');
 Route::post('login', 'App\Http\Controllers\UserController@authenticate');
-Route::get('publications', 'App\Http\Controllers\PublicationController@index');
 Route::get('comments', 'App\Http\Controllers\CommentController@index');
 Route::get('comments/{comment}', 'App\Http\Controllers\CommentController@show');
 Route::get('categories', 'App\Http\Controllers\CategoryController@index');
-    Route::get('publications', 'App\Http\Controllers\PublicationController@index');
 
 // Rutas privadas
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -47,21 +45,19 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Ruta para ver la solicitud del usuario
     Route::get('users/applications/{user}','App\Http\Controllers\UserController@showUserApplication');
 
-    // Ruta para eliminar la publicación del usuario
-    //Route::delete('users/publications/{user}','App\Http\Controllers\UserController@deleteUserPublications');
-
     // Ruta para ver el curriculum del usuario
     Route::get('users/curriculum/{user}','App\Http\Controllers\UserController@showUserCurriculum');
+    
+    // Ruta para visualizar el detalle de la postulación de una publicación.
+    Route::get('users/{user}/publication/application','App\Http\Controllers\UserController@showApplicationPublication');
 
-    // Ruta para editar el curriculum del usuario
-    Route::put('users/curriculum/{user}','App\Http\Controllers\UserController@updateUserCurriculum');
+    // Ruta para actualizar la postulación a una publicación por parte de la empresa
+    Route::put('users/{user}/publication/application','App\Http\Controllers\UserController@UpdateShowApplicationPublication');
 
     // Rutas para Hojas de vida
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
     Route::get('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@show');
     Route::post('cvitaes', 'App\Http\Controllers\CVitaeController@store');
-    
-    // Ruta para editar el curriculum del usuario
     Route::put('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@update');
     Route::delete('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@delete');
 
@@ -71,6 +67,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('publications', 'App\Http\Controllers\PublicationController@store');
     Route::put('publications/{publication}', 'App\Http\Controllers\PublicationController@update');
     Route::delete('publications/{publication}', 'App\Http\Controllers\PublicationController@delete');
+    Route::get('publications/category/{category}','App\Http\Controllers\PublicationController@publicationFilter');
 
     // Rutas para comentarios    
     Route::post('comments', 'App\Http\Controllers\CommentController@store');
@@ -89,10 +86,4 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('applications', 'App\Http\Controllers\ApplicationController@store');
     Route::put('applications/{application}', 'App\Http\Controllers\ApplicationController@update');
     Route::delete('applications/{application}', 'App\Http\Controllers\ApplicationController@delete');
-
-    // Ruta para visualizar el nombre de la publicación de una postulación
-    Route::get('users/{user}/publication/application','App\Http\Controllers\UserController@showApplicationPublication');
-
-    // Ruta para actualizar la postulación a una publicación por parte de la empresa
-    Route::put('users/{user}/publication/application','App\Http\Controllers\UserController@UpdateShowApplicationPublication');
 });
