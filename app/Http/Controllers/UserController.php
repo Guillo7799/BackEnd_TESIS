@@ -211,7 +211,8 @@ class UserController extends Controller
         $publications[0]->delete();
         return response()->json(null, 204);
     }*/
-    public function showUserCurriculum(User $user){
+    public function showUserCurriculum(User $user)
+    {
         $this->authorize('viewUserCurriculum', User::class);
         $curriculum = CVitae::where('user_id', $user['id'])->get();
         return response()->json(new CVitaeCollection($curriculum), 200);
