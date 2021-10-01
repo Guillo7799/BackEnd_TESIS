@@ -24,7 +24,7 @@ use App\Http\Resources\User as UserResource;
 class UserController extends Controller
 {
     private static $messages=[
-        'status.required' => 'Ingrese el nuevo estado de la postulación',
+        'required'=>'El campo: atribute es obligatorio',
     ];
     private static $curriculumMessages=[
         'habilities.required'=>'Falta que ingrese sus habilidades',
@@ -277,14 +277,13 @@ class UserController extends Controller
     }
     public function update(Request $request, User $user)
     {
-        $this->authorize('update',$user);
+        //$this->authorize('update',User::class);
         $request->validate([
-            'location' => 'required|string|max:500',            
-            'description' => 'required|string|max:1000',            
-            'cellphone' => 'required',
+            'location' => 'required|string',            
+            'description' => 'required|string',            
+            'cellphone' => 'required|string',
 
         ],self::$messages);
-
         $user->update($request->all());
         return response()->json($user, 200);
     }
@@ -292,9 +291,9 @@ class UserController extends Controller
     {
         $this->authorize('updateBusiness',$user);
         $request->validate([
-            'location' => 'required|string|max:500',  
-            'description' => 'required|string|max:1000',
-            'cellphone' => 'required',
+            'location' => 'required|string',  
+            'description' => 'required|string',
+            'cellphone' => 'required|string',
         ],self::$messages);
         $user->update($request->all());
         return response()->json($user, 200);

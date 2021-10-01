@@ -88,7 +88,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->isGranted(User::ROLE_STUDENT);
+        return true;
     }
     public function updateBusiness(User $user, User $model)
     {
