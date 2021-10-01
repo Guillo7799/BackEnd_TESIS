@@ -34,7 +34,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
     Route::get('users', 'App\Http\Controllers\UserController@index');
     Route::get('users/{user}', 'App\Http\Controllers\UserController@show');
-    Route::put('users/{user}', 'App\Http\Controllers\UserController@update');
+    Route::put('users/student/{user}', 'App\Http\Controllers\UserController@update');
     Route::put('users/{user}', 'App\Http\Controllers\UserController@updateBusiness');
     Route::delete('users/{user}', 'App\Http\Controllers\UserController@delete');
     Route::post('logout', 'App\Http\Controllers\UserController@logout');
@@ -67,6 +67,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('publications', 'App\Http\Controllers\PublicationController@store');
     Route::put('publications/{publication}', 'App\Http\Controllers\PublicationController@update');
     Route::delete('publications/{publication}', 'App\Http\Controllers\PublicationController@delete');
+
+    //Ruta para filtrado de publicaciones
     Route::get('publications/category/{category}','App\Http\Controllers\PublicationController@publicationFilter');
 
     // Rutas para comentarios    
