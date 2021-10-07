@@ -234,25 +234,37 @@ class UserController extends Controller
         $application = Application::where('user_id', $user['id'])->get();
         return response()->json(new ApplicationCollection($application), 200);
     }
+    /*
     public function showApplicationPublication(User $user)
     {
         //$user=Auth::user();
         //$this->authorize('viewApplicationPublicationUser', User::class);
         $publications= Publication::where('user_id', $user['id'])->get();
-        $details= Application::where('publication_id', ($publications[0]->id))->get();
-        //dd($details);
-        return response()->json(new ApplicationCollection($details), 200);
-    }/*
-    public function showApplicationPublication(User $user)
-    {
-        //$user=Auth::user();
-        //$this->authorize('viewApplicationPublicationUser', User::class);
-        $publications= Publication::where('user_id', $user['id'])->get();
-        $applicatons = Application::all();
-        $details=   whereIn(($applications->publication), $publications)->get();
+        $details= Application::where('publication_id', ($publications[0]->id))->get()->all();
         //dd($details);
         return response()->json(new ApplicationCollection($details), 200);
     }*/
+    public function showApplicationPublication()
+    {
+        $user=Auth::user();
+        //$this->authorize('viewApplicationPublicationUser', User::class);
+        $publications= Publication::where('user_id', $user['id'])->get();
+        //$details= Application::where('publication_id', ($publications[0]->id))->get();
+        $postulations=array();
+        foreach($publications as $publication)
+        {
+            $postulations[]=Application::where('publication_id','like',$publication->id);
+        }
+        //dd($postulations);
+        $postulations = array_map("unserialize", array_unique(array_map("serialize", $postulations)));
+        return response()->json($postulations, 200);
+        //$applications = Application::all();
+        //$details=Application::find('publication_id',$publications[0]->id)->get();
+        //$postulations=Application::pluck((array($applications)),'publication_id','like',$publications['id'])->get();
+        //$postulations =  whereIn(($applications->publication), $publications)->get();
+        //dd($details);
+        //return response()->json(new ApplicationCollection($details), 200);
+    }
     public function UpdateShowApplicationPublication(Application $application)
     {
         $this->authorize('updateApplicationPublication', User::class);
