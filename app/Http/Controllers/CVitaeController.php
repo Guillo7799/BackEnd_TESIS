@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CVitae;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\CVitae as CVitaeResource;
 use App\Http\Resources\CVitaeCollection;
 use Illuminate\Http\Request;
@@ -61,9 +62,10 @@ class CVitaeController extends Controller
     return response()->download(public_path(Storage::url($cVitae->image)),
     $cVitae->title);
     }
-    public function update(Request $request, CVitae $cVitae)
+    public function update(Request $request)
     {
-        $this->authorize('update',$cVitae);
+        $user=Auth::user();
+        $cVitae=CVitae::firstWhere('user_id','like',$user->id);
         $request->validate([
             'language'=>'required',
             'level_language'=>'required',
