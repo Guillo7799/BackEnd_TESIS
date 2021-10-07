@@ -63,6 +63,12 @@ class PublicationController extends Controller
         $publication=Publication::where('category_id',$category['id'])->get();
         return response()->json(new PublicationCollection($publication),200);
     }
+    public function applicationByPublication(Publication $publication)
+    {
+        $this->authorize('viewapplication', Publication::class);
+        $application=Application::where('publication_id',$publication['id'])->get();
+        return response()->json(new ApplicationCollection($application),200);
+    }
     public function update(Request $request, Publication $publication)
     {
         $this->authorize('update',$publication);

@@ -71,6 +71,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //Ruta para filtrado de publicaciones
     Route::get('publications/category/{category}','App\Http\Controllers\PublicationController@publicationFilter');
 
+    //Ruta para visualización de postulaciones por publicación
+    Route::get('publications/{publication}/applications','App\Http\Controllers\PublicationController@applicationByPublication');
+
     // Rutas para comentarios    
     Route::post('comments', 'App\Http\Controllers\CommentController@store');
     Route::delete('comments/{comment}', 'App\Http\Controllers\CommentController@delete');
