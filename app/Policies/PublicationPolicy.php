@@ -82,7 +82,7 @@ class PublicationPolicy
      */
     public function update(User $user, Publication $publication)
     {
-        return $user->isGranted(User::ROLE_STUDENT) && $user->id === $publication->user_id;
+        return $user->isGranted(User::ROLE_BUSINESS);
     }
 
     /**
