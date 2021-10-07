@@ -64,11 +64,12 @@ class CVitaeController extends Controller
     public function update(Request $request, CVitae $cVitae)
     {
         $this->authorize('update',$cVitae);
-
         $request->validate([
-            'habilities' => 'required|string|unique:c_vitaes,habilities,'.$cVitae->id.'|max:1000',
-            'certificates' => 'required|string|max:3000',
-            'work_experience'=>'required|string|max:3000',
+            'language'=>'required',
+            'level_language'=>'required',
+            'habilities' => 'required',
+            'certificates' => 'required',
+            'work_experience'=>'required',
         ], self::$messages);
         $cVitae->update($request->all());
         return response()->json($cVitae, 200);

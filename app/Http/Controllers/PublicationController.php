@@ -72,10 +72,14 @@ class PublicationController extends Controller
     public function update(Request $request, Publication $publication)
     {
         $this->authorize('update',$publication);
-
         $request->validate([
-            'description' => 'required|string|unique:publications,description,'.$publication->id.'|max:300',
+            'description' => 'required',
             'hours' => 'required',
+            'career'=>'required',
+            'date'=> 'required',
+            'city'=>'required',
+            'contact_email'=>'required',
+            'category_id' => 'required|exists:categories,id',
         ], self::$messages);
         $publication->update($request->all());
         return response()->json($publication, 200);
@@ -87,8 +91,9 @@ class PublicationController extends Controller
     }
     public function deletePublicationUser(User $user, Publication $publication){
         $this->authorize('deletePublicationUser', Publication::class);
-        $users = Publication::where('user_id','===','user.id')->get();
-        $publication->delete();
+        $users=User::auth();
+        $publications = Publication::where('user_id','===',$users['id'])->get();
+        $publications->delete();
         return response()->json(null, 204);
     }  
 }
