@@ -58,7 +58,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('cvitaes', 'App\Http\Controllers\CVitaeController@index');
     Route::get('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@show');
     Route::post('cvitaes', 'App\Http\Controllers\CVitaeController@store');
-    Route::put('users/{user}/cvitae', 'App\Http\Controllers\CVitaeController@update');
+    Route::put('update/cvitae', 'App\Http\Controllers\CVitaeController@update');
     Route::delete('cvitaes/{cvitae}', 'App\Http\Controllers\CVitaeController@delete');
 
     // Rutas para publicaciones de oferta
