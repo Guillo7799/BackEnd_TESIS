@@ -28,7 +28,7 @@ class Publication extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user' => '/api/users/' . $this->user_id,
-            'category' => '/api/categories/' . $this->category_id,
+            'category' =>  $this->category_id,
         ];
     }
 }
