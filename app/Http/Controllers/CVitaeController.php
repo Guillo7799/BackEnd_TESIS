@@ -10,6 +10,7 @@ use App\Http\Resources\CVitaeCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use JD\Cloudder\Facades\Cloudder;
 
 class CVitaeController extends Controller
 {
@@ -52,8 +53,18 @@ class CVitaeController extends Controller
     
         $request -> validate(self::$rules, self::$messages);
         $cVitae = CVitae::create($request->all());
-        $path = $request->image->store('public/cvitaes');
-        $cVitae->image = 'cvitaes/' . basename($path);
+
+        $image_name = $request->image->getRealPath();
+
+        Cloudder::upload($image_name, null, array(
+            "folder" => "practicas_al_dia",
+            "overwrite" => FALSE,
+            "resource_type" => "image",
+            "responsive" => TRUE,
+        ));
+
+        $path = Cloudder::getResult();
+        $cVitae->image = Cloudder::getPublicId();
         $cVitae->save();
         return response()->json($cVitae, 201);
     }

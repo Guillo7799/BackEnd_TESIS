@@ -22,7 +22,7 @@ class CommentController extends Controller
 
     public function index()
     {
-        return new CommentCollection(Comment::paginate(5));
+        return new CommentCollection(Comment::paginate(10));
     }
     public function show(Comment $comment)
     {
