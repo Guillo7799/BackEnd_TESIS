@@ -24,6 +24,7 @@ class CVitaeController extends Controller
         'highschool_degree'=>'required|string|max:500',
         'work_experience'=>'required|string|max:3000',
         'image' => 'required|image',
+        'link'=>'string',
     ];
 
     private static $messages=[
@@ -35,7 +36,7 @@ class CVitaeController extends Controller
         'certificates.required'=>'Los certificados son requeridos',
         'highschool_degree.required'=>'Ingrese su título de segundo nivel',
         'work_experience.required'=>'Ingrese su experiencia laboral',
-        'image.required' => 'Se necesita la imagen del curriculum',
+        'image.required' => 'Se necesita la imagen del curriculum',        
     ];
 
     public function index()
@@ -83,6 +84,7 @@ class CVitaeController extends Controller
             'habilities' => 'required',
             'certificates' => 'required',
             'work_experience'=>'required',
+            'link'=>'required',
         ], self::$messages);
         $cVitae->update($request->all());
         return response()->json($cVitae, 200);
