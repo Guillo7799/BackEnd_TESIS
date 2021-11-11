@@ -34,6 +34,7 @@ class CVitae extends JsonResource
             'location'=>$this->user->location,
             'email'=>$this->user->email,
             'cellphone' => $this->user->cellphone,
+            'link'=>$this->link,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
